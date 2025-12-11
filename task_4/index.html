@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Todo Scheduler</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="script.css">
+  </head>
+  <body>
+    <!-- animated background canvas -->
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <header>
+        <div class="logo">TS</div>
+        <div>
+          <h1>Todo Scheduler</h1>
+          <p class="lead">Schedule small tasks and the server will mark them done at the time.</p>
+        </div>
+      </header>
+
+      <div class="grid">
+        <section class="card">
+          <form id="taskForm">
+            <input name="title" placeholder="What do you want to do?" required />
+
+            <div style="display:flex;gap:8px;align-items:center">
+              <select id="listSelect" aria-label="Select list"></select>
+              <button type="button" id="newListBtn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:6px 10px;border-radius:8px;cursor:pointer">+ New List</button>
+              <button type="button" id="delListBtn" aria-label="Delete selected list" title="Delete list" style="background: rgba(220,38,38,0.03); border: 1px solid rgba(255,255,255,0.06); color: #ffdede; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-weight:600">Delete List</button>
+
+              <!-- inline new-list editor (hidden by default) -->
+              <div id="newListInline" style="display:none;align-items:center;gap:6px;margin-left:6px">
+                <input id="newListInput" placeholder="New list name" style="padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);" />
+                <button type="button" id="newListSaveBtn" style="padding:6px 8px;border-radius:8px;background:var(--accent);border:0;color:#04263b;cursor:pointer">Save</button>
+                <button type="button" id="newListCancelBtn" style="padding:6px 8px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);cursor:pointer">Cancel</button>
+              </div>
+            </div>
+
+            <label style="font-size:13px;margin-top:6px">Schedule type</label>
+            <select name="scheduleType" id="scheduleType">
+              <option value="once">One time</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="interval">Interval</option>
+              <option value="cron">Cron</option>
+            </select>
+
+            <div id="scheduleControls">
+              <div data-for="once" class="control-block">
+                <div class="form-row">
+                  <input type="text" id="onceDate" name="onceDate" style="max-width:160px" placeholder="dd/mm/yyyy" />
+                  <input type="time" name="onceTime" />
+                </div>
+              </div>
+
+              <div data-for="daily" class="control-block" style="display:none">
+                <label class="meta">Time of day</label>
+                <input type="time" name="dailyTime" />
+              </div>
+
+              <div data-for="weekly" class="control-block" style="display:none">
+                <label class="meta">Time</label>
+                <input type="time" name="weeklyTime" />
+                <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+                  <label><input type="checkbox" name="weekday" value="0" /> Sun</label>
+                  <label><input type="checkbox" name="weekday" value="1" /> Mon</label>
+                  <label><input type="checkbox" name="weekday" value="2" /> Tue</label>
+                  <label><input type="checkbox" name="weekday" value="3" /> Wed</label>
+                  <label><input type="checkbox" name="weekday" value="4" /> Thu</label>
+                  <label><input type="checkbox" name="weekday" value="5" /> Fri</label>
+                  <label><input type="checkbox" name="weekday" value="6" /> Sat</label>
+                </div>
+              </div>
+
+              <div data-for="interval" class="control-block" style="display:none">
+                <label class="meta">Interval (minutes)</label>
+                <input type="number" name="intervalMinutes" min="1" placeholder="e.g. 15" />
+              </div>
+
+              <div data-for="cron" class="control-block" style="display:none">
+                <label class="meta">Cron (seconds minutes hours day month dayOfWeek)</label>
+                <input name="cronExpr" placeholder="e.g. 0 30 9 * * 1-5" />
+              </div>
+            </div>
+
+            <textarea name="notes" placeholder="Notes (optional)"></textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div style="color:var(--muted);font-size:13px">Tip: choose a schedule type</div>
+              <button class="primary" type="submit">Schedule Task</button>
+            </div>
+          </form>
+          <footer class="note">Tasks are persisted to the backend and will be marked done when triggered.</footer>
+        </section>
+
+        <aside class="card">
+          <h3 style="margin:0 0 12px 0">Tasks</h3>
+          <ul id="tasks" aria-live="polite"></ul>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Inline confirmation modal -->
+    <div id="confirmModal" role="dialog" aria-modal="true">
+      <div class="confirm-box">
+        <div class="confirm-message">Are you sure?</div>
+        <div class="confirm-actions">
+          <button class="confirm-no">Cancel</button>
+          <button class="confirm-yes">Yes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast container -->
+    <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

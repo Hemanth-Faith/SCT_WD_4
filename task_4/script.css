@@ -1,0 +1,136 @@
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --muted:#9aa4b2;
+  --accent:#6ee7b7;
+  --accent-2:#60a5fa;
+  --glass: rgba(255,255,255,0.04);
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; font-family:'Inter',system-ui,Segoe UI,Roboto,Arial;
+  background: radial-gradient(1000px 600px at 10% 10%, rgba(96,165,250,0.08), transparent),
+              linear-gradient(180deg,#071025 0%, #071729 60%);
+  color:#e6eef8; display:flex; align-items:flex-start; justify-content:center; padding:40px 16px;
+}
+/* Delete button hover: red glow */
+#delListBtn:hover{
+  box-shadow: 0 6px 18px rgba(220,38,38,0.28);
+  border-color: rgba(220,38,38,0.6);
+  color: #ffdddd;
+}
+.wrap{width:100%;max-width:920px}
+header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#04263b}
+h1{font-family:'Poppins',sans-serif;margin:0;font-size:20px}
+p.lead{margin:0;color:var(--muted);font-size:13px}
+
+.grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+@media (max-width:900px){ .grid{grid-template-columns:1fr} }
+
+/* Card */
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.06));border-radius:var(--radius);padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter:blur(10px);}
+
+/* Form */
+form{display:grid;gap:12px}
+/* inputs/selects tuned for dark mode readability */
+input, textarea, select{
+  background: rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.06);
+  color: #e6eef8;
+  padding:10px;border-radius:10px;font-size:14px
+}
+input:focus, textarea:focus{outline:none;border-color:rgba(96,165,250,0.25);box-shadow:0 6px 20px rgba(96,165,250,0.06);color:#e6eef8}
+textarea{min-height:88px;resize:vertical}
+.form-row{display:flex;gap:8px}
+button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#04263b;padding:10px 12px;border-radius:10px;font-weight:600;cursor:pointer;transition:transform .12s ease, box-shadow .12s}
+button.primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(96,165,250,0.16)}
+
+/* Styled select with custom arrow */
+select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23e6eef8' d='M6 8L0 0h12z'/></svg>");background-repeat:no-repeat;background-position:right 12px center;padding-right:40px;cursor:pointer;background-color:rgba(11,18,32,0.6);position:relative;z-index:100}
+select:focus{outline:none;border-color:rgba(96,165,250,0.45);box-shadow:0 10px 30px rgba(96,165,250,0.08);color:#e6eef8;z-index:1000}
+select:hover{border-color:rgba(255,255,255,0.08)}
+
+/* Custom dropdown styles for screen recording visibility */
+.custom-select{position:relative;display:inline-block;width:100%}
+.custom-select select{display:none}
+.custom-select-trigger{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);color:#e6eef8;padding:10px 40px 10px 10px;border-radius:10px;font-size:14px;cursor:pointer;position:relative;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23e6eef8' d='M6 8L0 0h12z'/></svg>");background-repeat:no-repeat;background-position:right 12px center;background-color:rgba(11,18,32,0.6);user-select:none}
+.custom-select-trigger:hover{border-color:rgba(255,255,255,0.08)}
+.custom-select-options{position:absolute;top:100%;left:0;right:0;background:rgba(11,18,32,0.98);border:1px solid rgba(255,255,255,0.12);border-radius:10px;margin-top:4px;max-height:250px;overflow-y:auto;z-index:2000;display:none;box-shadow:0 12px 40px rgba(2,6,23,0.8)}
+.custom-select.open .custom-select-options{display:block}
+.custom-select-option{padding:10px 12px;cursor:pointer;color:#e6eef8;transition:background 0.15s}
+.custom-select-option:hover{background:rgba(96,165,250,0.15)}
+.custom-select-option.selected{background:rgba(110,231,183,0.12);font-weight:600}
+
+/* Prefer dark background for option list where supported */
+select option{background:var(--card);color:#e6eef8}
+
+/* Small responsive tweak to ensure the select fills form width */
+#scheduleType{width:100%;display:block}
+
+/* Tasks list */
+ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.task-card{display:block;padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 18px rgba(2,6,23,0.5);overflow:hidden;position:relative;}
+.task-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.task-title{font-weight:600;color:#f8fbff}
+.meta{color:var(--muted);font-size:12px;margin-top:6px}
+.notes{margin-top:8px;color:var(--muted);font-size:13px}
+.actions{margin-top:10px;display:flex;gap:8px}
+.chip{padding:6px 8px;border-radius:999px;font-size:12px;background:rgba(255,255,255,0.02);color:var(--muted)}
+
+/* Animations */
+@keyframes slideUpFade{from{opacity:0;transform:translateY(8px) scale(.995)}to{opacity:1;transform:none}}
+@keyframes pop{from{transform:scale(.98)}to{transform:scale(1)}}
+.task-card{animation:slideUpFade .42s cubic-bezier(.2,.9,.3,1) both;transform-origin:top center}
+.task-card.removing{animation:pop .18s ease both;opacity:0;transform:scale(.96);transition:opacity .22s}
+
+/* Completed task styling */
+.task-card.completed .task-title,
+.task-card.completed .notes,
+.task-card.completed .meta { text-decoration: line-through; opacity: 0.6 }
+.task-card.completed .chip{ background: rgba(255,255,255,0.02); color: var(--muted); }
+
+/* small helper */
+.empty{color:var(--muted);padding:20px;text-align:center}
+
+footer.note{margin-top:12px;color:var(--muted);font-size:12px;text-align:center}
+/* Confirmation modal + toast messages */
+#confirmModal{display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:1200}
+#confirmModal .confirm-box{background:var(--card);padding:18px;border-radius:12px;min-width:300px;box-shadow:0 10px 40px rgba(2,6,23,0.6);color:#e6eef8}
+#confirmModal .confirm-message{margin-bottom:12px;color:var(--muted)}
+#confirmModal .confirm-actions{display:flex;gap:8px;justify-content:flex-end}
+#confirmModal .confirm-yes{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#04263b;padding:8px 10px;border-radius:8px;cursor:pointer}
+#confirmModal .confirm-no{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 10px;border-radius:8px;cursor:pointer}
+
+#toastContainer{position:fixed;top:18px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:1300}
+.toast{background:rgba(255,255,255,0.04);padding:10px 12px;border-radius:10px;color:#e6eef8;box-shadow:0 8px 30px rgba(2,6,23,0.5);opacity:1;transition:opacity .4s}
+.toast.error{background:linear-gradient(180deg, rgba(220,38,38,0.12), rgba(220,38,38,0.06));color:#ffdede}
+.toast.success{background:linear-gradient(180deg, rgba(34,197,94,0.08), rgba(34,197,94,0.04));color:#04263b}
+
+/* Background canvas styles */
+#bgCanvas{
+  position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none;
+  display:block;
+  background: radial-gradient(ellipse at center, rgba(96,165,250,0.02), transparent 40%);
+}
+/* Ensure main content stacks above canvas */
+body > .wrap, .wrap{position:relative; z-index:2}
+/* Reduced motion toggle */
+@media (prefers-reduced-motion: reduce){
+  #bgCanvas{ display:none }
+}
+
+/* Opaque mask between animated background and the main UI so particles
+   are not visible through semi-transparent cards. This sits above the
+   canvas (z-index:1) and below the app content (z-index:2). */
+body::before{
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  /* lower opacity so subtle particles remain visible */
+  background: linear-gradient(180deg, rgba(3,10,20,0.35), rgba(2,8,18,0.36));
+  mix-blend-mode: normal;
+}
